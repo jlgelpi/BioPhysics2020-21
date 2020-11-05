@@ -23,7 +23,7 @@ parser.add_argument(
     '--vdw',
     action='store',
     dest='vdwprm_file',
-    default='data/vdwprm',
+    default=os.path.dirname(__file__) + '/data/vdwprm',
     help='Vdw parameters'
 )
 
@@ -66,4 +66,5 @@ print('Total Charge: {:8.2f}'.format(total_charge))
 # Srf goes to .xtra['EXP_NACCESS'] field
 srf = NACCESS_atomic(st[0], naccess_binary=NACCESS_BIN)
 
-print(vars(st[0]['A'][1]['N']))
+# Simple Test for atom fields
+print(vars(st[0][''][1]['N']))
