@@ -5,13 +5,19 @@
 """
 import argparse
 import sys
+import os
 
 from Bio.PDB.PDBParser import PDBParser
 from Bio.PDB.NACCESS import NACCESS_atomic
 from forcefield import VdwParamset
 
-# The specific PATH to naccess binary (in soft) is needed
-NACCESS_BIN = 'PATH_TO_NACCESS'
+NACCESS_BIN = os.path.dirname(__file__) + '/soft/NACCESS/naccess'
+
+
+parser = argparse.ArgumentParser(
+    prog='structure_setup',
+    description='basic structure setup'
+)
 
 parser.add_argument(
     '--vdw',
@@ -39,7 +45,6 @@ print('Parsing PDB', args.pdb_file.name)
 # load structure from PDB file of PDB ifle handler
 st = parser.get_structure('STR', args.pdb_file.name)
 
-# assign data types, and charges from libraries
 # We will use the xtra attribute in Bio.PDB.Atom to hold the new data
 # Getting Charges and Atom type from PDBQT
 print('Parsing PDBQT', args.pdbqt_file.name)
@@ -55,9 +60,10 @@ for at in st.get_atoms():
     at.xtra['charge'] = float(params[at.serial_number]['charge'])
     at.xtra['vdw'] = ff_params.at_types[at.xtra['atom_type']]
     total_charge += at.xtra['charge']
-print('Total Charge:', total_charge)
+print('Total Charge: {:8.2f}'.format(total_charge))
 
 # Calculating surfaces
-# Srf goes to .xtra field directly
+# Srf goes to .xtra['EXP_NACCESS'] field
 srf = NACCESS_atomic(st[0], naccess_binary=NACCESS_BIN)
 
+print(vars(st[0]['A'][1]['N']))
