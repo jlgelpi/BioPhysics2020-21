@@ -9,10 +9,9 @@ import sys
 from Bio.PDB.PDBParser import PDBParser
 from Bio.PDB.NACCESS import NACCESS_atomic
 from forcefield import VdwParamset
-import energies as en
 
 # The specific PATH to naccess binary (in soft) is needed
-NACCESS_BIN = '/home/gelpi/DEVEL/BioPhysics/2020-21/soft/NACCESS/naccess'
+NACCESS_BIN = 'PATH_TO_NACCESS'
 
 parser.add_argument(
     '--vdw',
@@ -21,15 +20,6 @@ parser.add_argument(
     default='data/vdwprm',
     help='Vdw parameters'
 )
-
-parser.add_argument(
-    '--diel',
-    action='store',
-    dest='diel_type',
-    type=int,
-    default=2,
-    help="Dielectric type: 0: vac, 1: wat, 2: M_S"
-    )
 
 parser.add_argument('pdb_file',help='Input PDB', type=open)
 parser.add_argument('pdbqt_file',help='Input PDBQT', type=open)
