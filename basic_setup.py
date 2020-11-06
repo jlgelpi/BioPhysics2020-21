@@ -67,4 +67,4 @@ print('Total Charge: {:8.2f}'.format(total_charge))
 srf = NACCESS_atomic(st[0], naccess_binary=NACCESS_BIN)
 
 # Simple Test for atom fields
-print(vars(st[0][''][1]['N']))
+print(vars(st[0]['A'][1]['N']))
