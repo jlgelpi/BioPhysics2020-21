@@ -50,12 +50,19 @@ st = parser.get_structure('STR', args.pdb_file.name)
 print('Parsing PDBQT', args.pdbqt_file.name)
 params=[{}]
 
+#Fix aton numbers when they do not start in 1
+i = 1
+for at in st.get_atoms():
+    at.serial_number = i
+    i += 1
+
 for line in args.pdbqt_file:
     line = line.rstrip()
     params.append({'charge': line[69:76], 'type': line[77:].replace(' ','')})
 
 total_charge = 0.
 for at in st.get_atoms():
+    print(at.serial_number)
     at.xtra['atom_type'] = params[at.serial_number]['type']
     at.xtra['charge'] = float(params[at.serial_number]['charge'])
     at.xtra['vdw'] = ff_params.at_types[at.xtra['atom_type']]
@@ -67,4 +74,6 @@ print('Total Charge: {:8.2f}'.format(total_charge))
 srf = NACCESS_atomic(st[0], naccess_binary=NACCESS_BIN)
 
 # Simple Test for atom fields
-print(vars(st[0]['A'][1]['N']))
+print(vars(st[0][' '][42]['N']))
+print(vars(st[0][' '][42]['N'].xtra['vdw']))
+
