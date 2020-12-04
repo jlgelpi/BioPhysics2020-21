@@ -11,19 +11,23 @@ from Bio.PDB.PDBParser import PDBParser
 from Bio.PDB.NACCESS import NACCESS_atomic
 from forcefield import VdwParamset
 
-NACCESS_BIN = os.path.dirname(__file__) + '/soft/NACCESS/naccess'
-
-
 parser = argparse.ArgumentParser(
     prog='structure_setup',
     description='basic structure setup'
 )
 
 parser.add_argument(
+    '--naccess',
+    action='store',
+    dest='naccess_bin',
+    default=os.path.dirname(os.path.abspath(__file__)) + '/soft/NACCESS/naccess',
+    help='Vdw parameters'
+)
+parser.add_argument(
     '--vdw',
     action='store',
     dest='vdwprm_file',
-    default=os.path.dirname(__file__) + '/data/vdwprm',
+    default=os.path.dirname(os.path.abspath(__file__)) + '/data/vdwprm',
     help='Vdw parameters'
 )
 
@@ -70,9 +74,9 @@ print('Total Charge: {:8.2f}'.format(total_charge))
 
 # Calculating surfaces
 # Srf goes to .xtra['EXP_NACCESS'] field
-srf = NACCESS_atomic(st[0], naccess_binary=NACCESS_BIN)
+srf = NACCESS_atomic(st[0], naccess_binary=args.naccess_bin)
 
-# Simple Test for atom fields
+# Simple Test for atom fields. Choose one atom from the PDB file. st[model][chain_id][res_number][atom_name]
 print(vars(st[0]['A'][42]['N']))
 print(vars(st[0]['A'][42]['N'].xtra['vdw']))
 
