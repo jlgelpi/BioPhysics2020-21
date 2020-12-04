@@ -62,7 +62,6 @@ for line in args.pdbqt_file:
 
 total_charge = 0.
 for at in st.get_atoms():
-    print(at.serial_number)
     at.xtra['atom_type'] = params[at.serial_number]['type']
     at.xtra['charge'] = float(params[at.serial_number]['charge'])
     at.xtra['vdw'] = ff_params.at_types[at.xtra['atom_type']]
@@ -74,6 +73,6 @@ print('Total Charge: {:8.2f}'.format(total_charge))
 srf = NACCESS_atomic(st[0], naccess_binary=NACCESS_BIN)
 
 # Simple Test for atom fields
-print(vars(st[0][' '][42]['N']))
-print(vars(st[0][' '][42]['N'].xtra['vdw']))
+print(vars(st[0]['A'][42]['N']))
+print(vars(st[0]['A'][42]['N'].xtra['vdw']))
 
