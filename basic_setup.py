@@ -62,6 +62,9 @@ for at in st.get_atoms():
 
 for line in args.pdbqt_file:
     line = line.rstrip()
+    #Skip TER records from PDBQT
+    if line.find('TER') != -1:
+        continue
     params.append({'charge': line[69:76], 'type': line[77:].replace(' ','')})
 
 total_charge = 0.
